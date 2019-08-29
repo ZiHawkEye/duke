@@ -1,13 +1,14 @@
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Task implements Serializable {
     protected String type;
     protected String description;
-    protected String date;
+    protected Date date;
     protected boolean isDone;
 
-    public Task(String type, String description, String date) {
+    public Task(String type, String description, Date date) {
         this.type = type;
         this.description = description;
         this.date = date;
@@ -27,9 +28,9 @@ public class Task implements Serializable {
     }
 
     public String toString() {
-        return String.format("[%s][%s] %s%s", this.type,
+        return String.format("[%s][%s] %s %s", this.type,
                 this.getStatusIcon(),
                 this.description,
-                this.date);
+                this.date.toString());
     }
 }

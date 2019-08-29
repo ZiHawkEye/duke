@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.Date;
 
 public class Parser {
     public static final int BYE = 0;
@@ -97,7 +98,7 @@ public class Parser {
         String date = scanner.nextLine();
 
         scanner.close();
-        return new Deadline(description, date);
+        return new Deadline(description, parseDate(date));
     }
 
     static Event createEvent(String input) {
@@ -117,6 +118,19 @@ public class Parser {
         String date = scanner.nextLine();
 
         scanner.close();
-        return new Event(description, date);
+        return new Event(description, parseDate(date));
     }
+
+    static Date parseDate(String date) {
+        String[] dayAndTime = date.trim().split(" ");
+        String[] ddMmYy = dayAndTime[0].split("/");
+        String hhSs = dayAndTime[1];
+        int day = Integer.parseInt(ddMmYy[0]);
+        int month = Integer.parseInt(ddMmYy[1]);
+        int year = Integer.parseInt(ddMmYy[2]);
+        int hour = Integer.parseInt(hhSs.substring(0, 2));
+        int min = Integer.parseInt(hhSs.substring(2));
+        System.out.println(String.format("%d %d %d %d %d", day, month, year, hour, min));
+        return new Date(year - 1900, month - 1, day, hour, min);
+    } 
 }

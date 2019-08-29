@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TodoList extends ArrayList<Task> implements Serializable {
+public class TaskList extends ArrayList<Task> implements Serializable {
     public boolean addTask(Task task) {
         return this.add(task);
     }
@@ -22,7 +22,7 @@ public class TodoList extends ArrayList<Task> implements Serializable {
         StringBuffer listBuffer = new StringBuffer();
         int len = this.size();
         for(int i = 1; i <= len; i++) {
-            listBuffer.append((i + 1) + "."
+            listBuffer.append(i + "."
                     + this.get(i).toString()
                     + "\n");
         }

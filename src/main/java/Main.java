@@ -35,7 +35,7 @@ public class Main {
         System.out.println(format(command));
     }
 
-    static void save(TodoList list) {
+    static void save(TaskList list) {
         try {
             FileOutputStream fout=new FileOutputStream(savePath);  
             ObjectOutputStream out=new ObjectOutputStream(fout);  
@@ -47,11 +47,11 @@ public class Main {
         }
     }
 
-    static TodoList restore() {
-        TodoList list = new TodoList();
+    static TaskList restore() {
+        TaskList list = new TaskList();
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(savePath));  
-            list = (TodoList) in.readObject(); 
+            list = (TaskList) in.readObject(); 
             in.close();
         } catch(Exception e) {
             System.out.println(e);
@@ -63,7 +63,7 @@ public class Main {
         response("Hello! I'm Duke\n"
                 + "What can I do for you?");
 
-        TodoList list = restore();
+        TaskList list = restore();
         Parser parser = new Parser();
         Scanner scanner = new Scanner(System.in);
 
