@@ -1,6 +1,6 @@
-import duke.TaskList;
+import duke.task.TaskList;
 import duke.task.Todo;
-import duke.DukeException;
+import duke.exception.DukeException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +10,7 @@ public class TaskListTest {
     @Test
     void addTaskTest() {
         TaskList taskList = new TaskList();
-        taskList.add(new Todo("description"));
+        taskList.addTask(new Todo("description"));
         assertEquals(1, taskList.size());
         taskList.remove(1);
     }
@@ -18,7 +18,7 @@ public class TaskListTest {
     @Test
     void deleteTaskTest() {
         TaskList taskList = new TaskList();
-        taskList.add(new Todo("description"));
+        taskList.addTask(new Todo("description"));
         taskList.remove(1);
         assertEquals(0, taskList.size());
     }

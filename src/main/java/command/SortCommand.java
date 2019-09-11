@@ -8,38 +8,37 @@ import duke.task.TaskList;
 import duke.task.Task;
 
 /**
- * Command containing method for adding Task to TaskList.
+ * Command containing method for finding Tasks in TaskList.
  */
-public class AddCommand extends Command {
-    private Task task;
+public class SortCommand extends Command {
+    private String field;
 
     /**
-     * Constructor for AddCommand.
+     * Constructor for SortCommand.
      * 
-     * @param task Task to be added.
+     * @param field Field to sort tasks by.
      */
-    public AddCommand(Task task) {
-        this.task = task;
+    public SortCommand(String field) {
+        this.field = field;
     }
     
     /**
-     * Adds a Task to the TaskList.
+     * Sorts Tasks in TaskList according to the specified field.
      *
-     * @param tasks TaskList to add Task to.
+     * @param tasks TaskList to sort Tasks.
      * @param ui Ui for printing responses to the console.
      * @param storage Storage that stores the modified TaskList.
      */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
-        tasks.addTask(this.task);
-        ui.printResponse("Got it. I've added this task:\n  "
-                + this.task.toString() + "\n"
-                + "Now you have " + tasks.size() + " tasks in the list.");
+        tasks.sort(field);
+        ui.printResponse("Here is the sorted list:\n"
+                + tasks.toString() + "\n");
     }
 
     /**
      * Returns boolean to initiate exit of program.
      * 
-     * @return false so program does not exit.
+     * @return False so program does not exit.
      */
     public boolean isExit() {
         return false;

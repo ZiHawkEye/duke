@@ -33,7 +33,7 @@ public class FindCommand extends Command {
         TaskList tempList = new TaskList();
         for (Task task : tasks) {
             if (task.toString().contains(this.query)) {
-                tempList.add(task);
+                tempList.addTask(task);
             }
         }
         ui.printResponse("Here are the matching tasks in your list:\n  "

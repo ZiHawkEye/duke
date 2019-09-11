@@ -7,12 +7,15 @@ import duke.command.DoneCommand;
 import duke.command.ExitCommand;
 import duke.command.FindCommand;
 import duke.command.ListCommand;
+import duke.command.SortCommand;
+
 import duke.task.Task;
 import duke.task.Todo;
 import duke.task.Deadline;
 import duke.task.Event;
+
 import duke.exception.DukeException;
-import java.util.HashMap;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,6 +57,8 @@ public class Parser {
             return parseTask(input);
         case "find":
             return parseFind(input);
+        case "sort":
+            return parseSort(input);
         default:
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
@@ -64,7 +69,7 @@ public class Parser {
      * If input cannot be parsed, throws DukeException.
      *
      * @param input Input entered by user.
-     * @return itemId for object to be marked done.
+     * @return DoneCommand to execute done action.
      * @throws DukeException If input has incorrect format.
      */
     public static DoneCommand parseDone(String input) throws DukeException {
@@ -77,7 +82,7 @@ public class Parser {
         } catch (AssertionError | NumberFormatException e) {
             throw new DukeException("☹ OOPS!!! Incorrect format for done command.");
         }
-        
+
         return new DoneCommand(itemId);
     }
 
@@ -86,7 +91,7 @@ public class Parser {
      * If input cannot be parsed, throws DukeException.
      *
      * @param input Input entered by user.
-     * @return itemId for object to be marked done.
+     * @return DeleteCommand to execute deletion of Task.
      * @throws DukeException If input has incorrect format.
      */
     public static DeleteCommand parseDelete(String input) throws DukeException {
@@ -108,7 +113,7 @@ public class Parser {
      * If input cannot be parsed, throws DukeException.
      *
      * @param input Input entered by user.
-     * @return Task to be added.
+     * @return AddCommand to execute addition of Task.
      * @throws DukeException If input has incorrect format.
      */
     public static AddCommand parseTask(String input) throws DukeException {
@@ -164,7 +169,7 @@ public class Parser {
 
             return new AddCommand(new Event(description, date));
         default:
-            throw new DukeException("Invalid task input.");
+            throw new DukeException("☹ OOPS!!! Invalid format for task command.");
         }
     }
 
@@ -172,10 +177,31 @@ public class Parser {
      * Returns query to match to Tasks.
      * 
      * @param input Input entered by user.
-     * @return String containing query.
+     * @return FindCommand to execute find.
      */
-    public static FindCommand parseFind(String input) {
-        String query = input.split("find")[1];
+    public static FindCommand parseFind(String input) throws DukeException {
+        String query;
+        try {
+            query = input.split("find")[1].trim();
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("☹ OOPS!!! Incorrect format for find command.");
+        }
         return new FindCommand(query);
+    }
+
+    /**
+     * Returns field to sort Tasks by.
+     * 
+     * @param input Input entered by user.
+     * @return SortCommand to execute sort.
+     */
+    public static SortCommand parseSort(String input) throws DukeException {
+        String field;
+        try {
+            field = input.split("sort")[1].trim();
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("☹ OOPS!!! Incorrect format for sort command.");
+        }
+        return new SortCommand(field);
     }
 }
